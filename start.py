@@ -1,12 +1,14 @@
 import os
 
-path = 'd:\\ROBO_ONLINE\\ALL_FILE'
-os.remove('rea.txt')
+from dict_path_name import d
 
-def add_new_readme(new_file: str, text: str):
+path = 'd:\\ROBO_ONLINE\\ALL_FILE'
+
+
+def write_text(new_file: str, text: str):
     """
-    Запись нового файла из Readme.txt
-    :param new_file: имя файла куда записывать Readme
+    Запись текста
+    :param new_file: имя файла куда записывать тест
     :param text: текст который нужно записать
     """
     with open(new_file, 'a') as n_f:
@@ -40,34 +42,32 @@ def list_name_build(path):
     return content
 
 
-def readme_out_text_in(path_readme: str, file_readme: str):
-    path_out = f'{path_readme}\\{file_readme}'
-    path_in = 'readme8.txt'
-    # print(f'Из {path_out}\nВ {path_in}')
-    if file_readme.upper() == "README.TXT":
-        with open(path_out, 'r') as file:
-            for item in file:
-                print(path_in)
-                print(item)
-
-
-def read_file(path):
+def dict_write_path_name(path):
     """
-    Вывод списка имён папок обновлений по дате
+    Запись в dict_path_name.py словаря ключ=путь, значение=список файлов,
+    в значении 'readme.txt''readme' на первом месте
     :param path: путь к папкам с обновлениями
     """
     content = os.listdir(path)
     for file in content:
         name_path_catalog = f'{path}\\{file}'
         if os.path.isdir(name_path_catalog):  # Является ли путь каталогом
-            read_file(name_path_catalog)
+            dict_write_path_name(name_path_catalog)
         else:
-            if file.upper() == "README.TXT":
-                print(path, file)
-                text = read_readme(name_path_catalog)
-                add_new_readme('rea.txt',path)
-                add_new_readme('rea.txt',text)
-                print(text)
+            if 'readme.txt' in content:
+                content.remove('readme.txt')
+                # content.insert(0, 'readme.txt') # вставка вначало
+                content.append('readme.txt')
+            if 'readme' in content:
+                content.remove('readme')
+                # content.insert(0, 'readme') # вставка вначало
+                content.append('readme.txt')
+            d[path] = content
+    try:
+        os.remove('dict_path_name.py')
+        write_text(f"dict_path_name.py", f'd = {d}')
+    except FileNotFoundError:
+        write_text(f"dict_path_name.py", f'd = {d}')
 
 
-read_file(path)
+dict_write_path_name(path)
