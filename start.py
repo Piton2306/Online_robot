@@ -3,6 +3,7 @@ import os
 from dict_path_name import d
 
 path = 'd:\\ROBO_ONLINE\\ALL_FILE'
+
 d = {}
 
 
@@ -21,7 +22,8 @@ def write_text(new_file: str, text: str):
 def read_readme(path_name_readme: str, name_readme: str):
     """
     Чтение README.txt перекодировка в utf-8
-    :param path_name_readme: имя файла для чтения Readme
+    :param path_name_readme: путь к файлу
+    :param name_readme: имя файла для чтения Readme
     :return list: Возвращает текст файла
     """
     if name_readme.lower() == 'readme' or name_readme.lower() == 'readme.txt':
@@ -35,15 +37,15 @@ def read_readme(path_name_readme: str, name_readme: str):
         return name_readme
 
 
-def list_name_build(path):
-    """
-    Вывод списка имён папок обновлений по дате
-    :param path: путь к папкам с обновлениями
-    :return content: Возвращает отсортированный список папок с датой
-    """
-    content = os.listdir(path)
-    content.sort(reverse=False)
-    return content
+# def list_name_build(path):
+#     """
+#     Вывод списка имён папок обновлений по дате
+#     :param path: путь к папкам с обновлениями
+#     :return content: Возвращает отсортированный список папок с датой
+#     """
+#     content = os.listdir(path)
+#     content.sort(reverse=False)
+#     return content
 
 
 def dict_write_path_name(path):
@@ -76,8 +78,9 @@ def dict_write_path_name(path):
 
 def save_all_readme(name_file_out: str, dict_file: dict):
     """
-    Запись собранyой readme с
+    Запись собранной readme с
     :param name_file_out: Имя файла
+    :param dict_file: Словарь с файлами
     """
     sorted_dict_file = dict(sorted(dict_file.items(), reverse=True))
     try:
@@ -106,5 +109,5 @@ def save_all_readme(name_file_out: str, dict_file: dict):
 
 
 if __name__ == "__main__":
-    # dict_write_path_name(path)
-    save_all_readme('2.txt', d)
+    dict_write_path_name(path)
+    save_all_readme('3.txt', d)
