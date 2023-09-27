@@ -1,7 +1,8 @@
 import os
-from params import *
 import shutil
+
 from dict_path_name import d
+from params import *
 
 d = {}
 
@@ -97,7 +98,7 @@ def save_all_readme(name_file_out: str, dict_file: dict):
             if values_one != 'readme' and values_one != 'readme.txt':
                 write_text(name_file_out, '\n')
                 path_keys = f'{keys}\{values_one}'
-                write_text(name_file_out,f'{path_keys}\n')
+                write_text(name_file_out, f'{path_keys}\n')
                 write_text(name_file_out, f'ДОБАВЛЕН ФАЙЛ:{values_one}\n ')
             else:
                 write_text(name_file_out, '\n')
@@ -105,11 +106,9 @@ def save_all_readme(name_file_out: str, dict_file: dict):
                 write_text(name_file_out, read_readme(path_keys, values_one))
         write_text(name_file_out, '\n')
         # write_text(name_file_out, '\n')
-    dict_write_path_name(path_out)
-
 
 
 if __name__ == "__main__":
     dict_write_path_name(path_out)
     save_all_readme(readme_name_all, d)
-    shutil.copyfile(readme_name_all,f'{path_in}\\{readme_name_all}')
+    shutil.copyfile(readme_name_all, f'{path_in}\\{readme_name_all}')
