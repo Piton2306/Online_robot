@@ -1,6 +1,7 @@
 import os
 import shutil
 
+from dict_file_in import f
 from dict_path_name import d
 from params import *
 
@@ -46,6 +47,25 @@ def read_readme(path_name_readme: str, name_readme: str):
 #     content = os.listdir(path)
 #     content.sort(reverse=False)
 #     return content
+def save_file_in(path_file_out, name_file):
+    """
+    Запись в dict_path_name.py словаря ключ=путь, значение=список файлов,
+    в значении 'readme.txt''readme' на первом месте
+    :param path_file_out: путь к файлу
+    :param name_file: имя файла
+    """
+    for keys, values_all in f.items():
+        if name_file in values_all:
+            path = f'{path_in}\\{keys}'  # d:\ROBO_ONLINE\all_in\Acquirer3
+            path_file_and_name = f'{path_file_out}\\{name_file}'
+            # print(path_file_and_name)
+            try:
+                os.makedirs(path)
+                shutil.copyfile(path_file_and_name, f'{path}\\{name_file}')
+                os.remove(path_file_and_name)
+            except FileExistsError:
+                shutil.copyfile(path_file_and_name, f'{path}\\{name_file}')
+                os.remove(path_file_and_name)
 
 
 def dict_write_path_name(path):
@@ -76,7 +96,7 @@ def dict_write_path_name(path):
         write_text(f"dict_path_name.py", f'd = {d}')
 
 
-def save_all_readme(name_file_out: str, dict_file: dict):
+def save_all_readme_and_file(name_file_out: str, dict_file: dict):
     """
     Запись собранной readme с
     :param name_file_out: Имя файла
@@ -100,6 +120,7 @@ def save_all_readme(name_file_out: str, dict_file: dict):
                 path_keys = f'{keys}\{values_one}'
                 write_text(name_file_out, f'{path_keys}\n')
                 write_text(name_file_out, f'ДОБАВЛЕН ФАЙЛ:{values_one}\n ')
+                save_file_in(keys, values_one)
             else:
                 write_text(name_file_out, '\n')
                 path_keys = f'{keys}\{values_one}'
@@ -110,5 +131,5 @@ def save_all_readme(name_file_out: str, dict_file: dict):
 
 if __name__ == "__main__":
     dict_write_path_name(path_out)
-    save_all_readme(readme_name_all, d)
-    shutil.copyfile(readme_name_all, f'{path_in}\\{readme_name_all}')
+    save_all_readme_and_file(readme_name_all, d)
+    shutil.move(readme_name_all, f'{path_in}\\{readme_name_all}')
